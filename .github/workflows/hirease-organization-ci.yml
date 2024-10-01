@@ -31,7 +31,7 @@ jobs:
 
       - name: Check commit messages
         run: |
-          npx commitlint --from=HEAD~1 --to=HEAD
+          npx commitlint --from=HEAD --to=HEAD
 
       # - name: Build application
       #   run: npm run build
