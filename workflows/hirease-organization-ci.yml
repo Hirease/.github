@@ -1,25 +1,7 @@
 name: Hirease Organization CI
 
 on:
-  pull_request:
-    branches:
-      - test/**
-      - main
-      - dev
-      - hotfix/**
-      - feature/**
-      - bugfix/**
-      - release/**
-  push:
-    branches:
-      - test/**
-      - main
-      - dev
-      - hotfix/**
-      - feature/**
-      - bugfix/**
-      - release/**
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   lint:
