@@ -1,16 +1,25 @@
-name: Lint and Prettier Check
+name: CI PipLines
 
 on:
   pull_request:
     branches:
-      - testing
+      - test/**
       - main
-      - development
+      - dev
+      - hotfix/**
+      - feature/**
+      - bugfix/**
+      - release/**
   push:
     branches:
-      - testing
+      - test/**
       - main
-      - development
+      - dev
+      - hotfix/**
+      - feature/**
+      - bugfix/**
+      - release/**
+  workflow_dispatch:
 
 jobs:
   lint:
@@ -32,3 +41,10 @@ jobs:
 
       - name: Run Prettier
         run: npm run prettier -- --check .
+
+      # - name: Run tests
+      #   run: npm run test
+
+      # - name: Build application
+      #   run: npm run build
+#  jest & commentlint
