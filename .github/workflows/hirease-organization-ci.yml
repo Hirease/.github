@@ -3,36 +3,172 @@ name: Hirease Organization CI
 on:
   workflow_call:
 jobs:
-  lint:
+  setup:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['node']
+        node-version: ["node"]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: checkout code
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: setup nodejs
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
+      - name: install dependencies
         run: npm install
 
-      - name: Run ESLint
+  eslint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ["node"]
+
+    needs: setup
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - name: setup nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: install dependencies
+        run: npm install
+
+      - name: eslint
         run: npm run lint
 
-      - name: Run Prettier
-        run: npm run format -- --check .
+  prettier:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ["node"]
 
-      - name: Run Jest tests
-        run: npm run test
+    needs: setup
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - name: setup nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: install dependencies
+        run: npm install
+
+      - name: prettier
+        run: npm run format
+
+  commit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ["node"]
+
+    needs: setup
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - name: setup nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: install dependencies
+        run: npm install
 
       - name: Check commit messages
         run: |
           npx commitlint --from=HEAD --to=HEAD
 
-      # - name: Build application
-      #   run: npm run build
-#   commentlint
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ["node"]
+
+    needs: [eslint, prettier]
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - name: setup nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: install dependencies
+        run: npm install
+
+      - name: test
+        run: npm run test
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ["node"]
+
+    needs: test
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - name: setup nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: install dependencies
+        run: npm install
+
+      - name: build
+        run: npm run build
+
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ["node"]
+
+    needs: build
+
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - name: setup nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: install dependencies
+        run: npm install
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
