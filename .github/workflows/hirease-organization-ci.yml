@@ -179,10 +179,10 @@ jobs:
 
       - name: Build and Push Mono-Client Docker Image
         run: |
-          docker build -t ghcr.io/hirease/mono-client:latest -f ./client/Dockerfile .
+          docker build -t ghcr.io/hirease/mono-client:latest -f ./FrontEnd/Dockerfile .
           docker push ghcr.io/hirease/mono-client:latest
 
       - name: Build and Push Mono-Server Docker Image
         run: |
-          docker build -t ghcr.io/hirease/mono-server:latest -f ./server/Dockerfile .
+          docker build -t ghcr.io/hirease/mono-server:latest -f ./back-end/Dockerfile .
           docker push ghcr.io/hirease/mono-server:latest
