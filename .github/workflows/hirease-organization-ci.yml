@@ -197,7 +197,7 @@ jobs:
 
       - name: Build and Push Mono-Client Docker Image
         run: |
-          cd FrontEnd  # Change to the FrontEnd directory
+          cd ./FrontEnd  # Change to the FrontEnd directory
           docker build -t ghcr.io/hirease/mono-client:latest -f ./Dockerfile .
           docker push ghcr.io/hirease/mono-client:latest
 
