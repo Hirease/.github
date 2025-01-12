@@ -2,9 +2,16 @@ name: Hirease Organization CI
 
 on:
   workflow_call:
+    secrets:
+      VERCEL_TOKEN:
+        required: true
+      VERCEL_ORG_ID:
+        required: true
+      VERCEL_PROJECT_ID:
+        required: true
   pull_request:
     branches:
-      - dev  # This ensures the workflow runs only when a PR targets the 'dev' branch
+      - dev
     types:
       - opened
       - synchronize
