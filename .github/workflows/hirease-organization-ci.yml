@@ -172,7 +172,7 @@ jobs:
         with:
            repository: Hirease/FrontEnd
            token: ${{ secrets.GITHUB_TOKEN }}  # Or use a PAT if required
-           path: ./FrontEnd
+           path: ../FrontEnd
 
       - name: Debug Directory Structure (FrontEnd Repo)
         run: |
@@ -183,7 +183,7 @@ jobs:
         with:
           repository: Hirease/back-end
           token: ${{ secrets.GITHUB_TOKEN }}
-          path: ./back-end
+          path: ../back-end
 
       - name: Debug Directory Structure (Back-End Repo)
         run: |
@@ -242,14 +242,14 @@ jobs:
         with:
           repository: hirease/FrontEnd
           token: ${{ secrets.GITHUB_TOKEN }}
-          path: FrontEnd
+          path: ../FrontEnd
 
       - name: Checkout back-end repository
         uses: actions/checkout@v3
         with:
           repository: hirease/back-end
           token: ${{ secrets.GITHUB_TOKEN }}
-          path: back-end
+          path: ../back-end
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -264,12 +264,12 @@ jobs:
 
       - name: Build and Push Mono-Client Docker Image
         run: |
-          cd FrontEnd  # Change to the FrontEnd directory
+          cd ../FrontEnd  # Change to the FrontEnd directory
           docker build -t ghcr.io/hirease/mono-client:latest -f ./Dockerfile .
           docker push ghcr.io/hirease/mono-client:latest
 
       - name: Build and Push Mono-Server Docker Image
         run: |
-          cd back-end  # Change to the back-end directory
+          cd ../back-end  # Change to the back-end directory
           docker build -t ghcr.io/hirease/mono-server:latest -f ./Dockerfile .
           docker push ghcr.io/hirease/mono-server:latest
