@@ -203,7 +203,7 @@ jobs:
 
       - name: Build and Push Mono-Server Docker Image
         run: |
-          cd back-end  # Change to the back-end directory
+          cd ./back-end  # Change to the back-end directory
           docker build -t ghcr.io/hirease/mono-server:latest -f ./Dockerfile .
           docker push ghcr.io/hirease/mono-server:latest
 
