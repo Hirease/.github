@@ -172,7 +172,7 @@ jobs:
         with:
            repository: Hirease/FrontEnd
            token: ${{ secrets.GITHUB_TOKEN }}  # Or use a PAT if required
-           path: FrontEnd
+           path: ./FrontEnd
 
       - name: Debug Directory Structure (FrontEnd Repo)
         run: |
@@ -183,7 +183,7 @@ jobs:
         with:
           repository: Hirease/back-end
           token: ${{ secrets.GITHUB_TOKEN }}
-          path: back-end
+          path: ./back-end
 
       - name: Debug Directory Structure (Back-End Repo)
         run: |
