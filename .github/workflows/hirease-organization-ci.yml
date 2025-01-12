@@ -160,9 +160,13 @@ jobs:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-    steps:
+  steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Debug Directory Structure
+        run: |
+          ls -R  # Debugging step to list files and directories
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -193,14 +197,16 @@ jobs:
 
       - name: Build and Push Mono-Client Docker Image
         run: |
-          docker build -t ghcr.io/hirease/mono-client:latest -f ./FrontEnd/Dockerfile .
+          cd FrontEnd  # Change to the FrontEnd directory
+          docker build -t ghcr.io/hirease/mono-client:latest -f ./Dockerfile .
           docker push ghcr.io/hirease/mono-client:latest
 
       - name: Build and Push Mono-Server Docker Image
         run: |
-          docker build -t ghcr.io/hirease/mono-server:latest -f ./back-end/Dockerfile .
+          cd back-end  # Change to the back-end directory
+          docker build -t ghcr.io/hirease/mono-server:latest -f ./Dockerfile .
           docker push ghcr.io/hirease/mono-server:latest
-
+          
   sync-docker:
     runs-on: ubuntu-latest
     needs: [setup, eslint, prettier, commit, test, build]
