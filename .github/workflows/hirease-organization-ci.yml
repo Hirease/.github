@@ -168,16 +168,16 @@ jobs:
         run: |
           ls -R  # Debugging step to list files and directories
 
-     # - name: Checkout FrontEnd repository
-      #  uses: actions/checkout@v3
-     #   with:
-        #  repository: Hirease/FrontEnd
-     #     token: ${{ secrets.GITHUB_TOKEN }}  # Or use a PAT if required
-      #    path: FrontEnd
+      - name: Checkout FrontEnd repository
+        uses: actions/checkout@v3
+        with:
+          repository: Hirease/FrontEnd
+          token: ${{ secrets.GITHUB_TOKEN }}  # Or use a PAT if required
+          path: FrontEnd
 
-    #  - name: Debug Directory Structure (FrontEnd Repo)
-    #    run: |
-     #     ls -R FrontEnd  # Debugging step to list files and directories
+      - name: Debug Directory Structure (FrontEnd Repo)
+        run: |
+          ls -R FrontEnd  # Debugging step to list files and directories
 
       - name: Checkout back-end repository
         uses: actions/checkout@v3
@@ -217,11 +217,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-     # - name: Build and Push Mono-Client Docker Image
-     #   run: |
-     #     cd FrontEnd  # Change to the FrontEnd directory
-     #     docker build -t ghcr.io/hirease/mono-client:latest -f ./Dockerfile .
-     #     docker push ghcr.io/hirease/mono-client:latest
+      - name: Build and Push Mono-Client Docker Image
+        run: |
+          cd FrontEnd  # Change to the FrontEnd directory
+          docker build -t ghcr.io/hirease/mono-client:latest -f ./Dockerfile .
+          docker push ghcr.io/hirease/mono-client:latest
 
       - name: Build and Push Mono-Server Docker Image
         run: |
@@ -265,11 +265,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-    #  - name: Build and Push Mono-Client Docker Image
-    #    run: |
-    #      cd FrontEnd  # Change to the FrontEnd directory
-    #      docker build -t ghcr.io/hirease/mono-client:latest -f ./Dockerfile .
-    #      docker push ghcr.io/hirease/mono-client:latest
+      - name: Build and Push Mono-Client Docker Image
+        run: |
+          cd FrontEnd  # Change to the FrontEnd directory
+          docker build -t ghcr.io/hirease/mono-client:latest -f ./Dockerfile .
+          docker push ghcr.io/hirease/mono-client:latest
 
       - name: Build and Push Mono-Server Docker Image
         run: |
