@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ["node"]
+        node-version: [ "node" ]
 
     steps:
       - name: Checkout code
@@ -36,125 +36,25 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-  eslint:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ["node"]
-
-    needs: setup
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: ESLint
+      - name: Check eslint
         run: npm run lint
 
-  prettier:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ["node"]
-
-    needs: setup
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Prettier
+      - name: Check Prettier
         run: npm run format
-
-  commit:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ["node"]
-
-    needs: setup
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install dependencies
-        run: npm install
 
       - name: Check commit messages
         run: |
           npx commitlint --from=HEAD --to=HEAD
 
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ["node"]
-
-    needs: [eslint, prettier]
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Test
+      - name: Check test coverage
         run: npm run test
-
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ["node"]
-
-    needs: test
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install dependencies
-        run: npm install
 
       - name: Build
         run: npm run build
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: setup
 
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -231,7 +131,7 @@ jobs:
 
   sync-docker:
     runs-on: ubuntu-latest
-    needs: [setup, eslint, prettier, commit, test, build]
+    needs: [ setup ]
 
     if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened')
 
