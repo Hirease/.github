@@ -68,16 +68,16 @@ jobs:
         run: |
           ls -R  # Debugging step to list files and directories
 
-      - name: Checkout FrontEnd repository
+      - name: Checkout front-end repository
         uses: actions/checkout@v3
         with:
-          repository: Hirease/FrontEnd
+          repository: Hirease/front-end
           token: ${{ secrets.GITHUB_TOKEN }}  # Or use a PAT if required
-          path: FrontEnd
+          path: front-end
 
-      - name: Debug Directory Structure (FrontEnd Repo)
+      - name: Debug Directory Structure (front-end Repo)
         run: |
-          ls -R FrontEnd  # Debugging step to list files and directories
+          ls -R front-end  # Debugging step to list files and directories
 
       - name: Checkout back-end repository
         uses: actions/checkout@v3
@@ -119,7 +119,7 @@ jobs:
 
       - name: Build and Push Mono-Client Docker Image
         run: |
-          cd FrontEnd  # Change to the FrontEnd directory
+          cd front-end  # Change to the front-end directory
           docker build -t ghcr.io/hirease/mono-client:latest -f ./Dockerfile .
           docker push ghcr.io/hirease/mono-client:latest
 
@@ -139,12 +139,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Checkout FrontEnd repository
+      - name: Checkout front-end repository
         uses: actions/checkout@v3
         with:
-          repository: Hirease/FrontEnd
+          repository: Hirease/front-end
           token: ${{ secrets.GITHUB_TOKEN }}
-          path: FrontEnd
+          path: front-end
 
       - name: Checkout back-end repository
         uses: actions/checkout@v3
@@ -167,7 +167,7 @@ jobs:
 
       - name: Build and Push Mono-Client Docker Image
         run: |
-          cd FrontEnd  # Change to the FrontEnd directory
+          cd front-end  # Change to the front-end directory
           docker build -t ghcr.io/hirease/mono-client:latest -f ./Dockerfile .
           docker push ghcr.io/hirease/mono-client:latest
 
