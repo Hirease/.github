@@ -28,10 +28,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Add main repository directory to safe.directory
-      - name: Add main repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/front-end/front-end
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -68,10 +64,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Add main repository directory to safe.directory
-      - name: Add main repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/front-end/front-end
-
       - name: Debug Directory Structure (Main Repo)
         run: |
           ls -R  # Debugging step to list files and directories
@@ -83,10 +75,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}  # Or use a PAT if required
           path: front-end
 
-      # Add front-end repository directory to safe.directory
-      - name: Add front-end repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/front-end/front-end/front-end
-
       - name: Debug Directory Structure (front-end Repo)
         run: |
           ls -R front-end  # Debugging step to list files and directories
@@ -97,10 +85,6 @@ jobs:
           repository: Hirease/back-end
           token: ${{ secrets.GITHUB_TOKEN }}
           path: back-end
-
-      # Add back-end repository directory to safe.directory
-      - name: Add back-end repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/front-end/front-end/back-end
 
       - name: Debug Directory Structure (Back-End Repo)
         run: |
@@ -155,10 +139,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Add main repository directory to safe.directory
-      - name: Add main repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/front-end/front-end
-
       - name: Checkout front-end repository
         uses: actions/checkout@v3
         with:
@@ -166,20 +146,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: front-end
 
-      # Add front-end repository directory to safe.directory
-      - name: Add front-end repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/front-end/front-end/front-end
-
       - name: Checkout back-end repository
         uses: actions/checkout@v3
         with:
           repository: Hirease/back-end
           token: ${{ secrets.GITHUB_TOKEN }}
           path: back-end
-
-      # Add back-end repository directory to safe.directory
-      - name: Add back-end repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/front-end/front-end/back-end
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
