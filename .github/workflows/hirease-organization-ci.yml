@@ -107,7 +107,9 @@ jobs:
           node-version: "node"
 
       - name: Install dependencies
-        run: npm install
+        run: |
+           npm install
+           npm install @nestjs/common
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
