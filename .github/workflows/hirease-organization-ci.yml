@@ -73,6 +73,9 @@ jobs:
         run: |
           ls -R  # Debugging step to list files and directories
 
+      - name: Debug Token
+        run: echo "Token: ${{ secrets.SGITHUB_TOKEN }}"
+
       - name: Checkout front-end repository
         uses: actions/checkout@v3
         with:
