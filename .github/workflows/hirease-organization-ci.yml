@@ -16,7 +16,11 @@ on:
       - opened
       - synchronize
       - reopened
-
+permissions:
+  repositories: ['Hirease/front-end', 'Hirease/back-end']
+  contents: read
+  actions: read
+  
 jobs:
   setup:
     runs-on: ubuntu-latest
