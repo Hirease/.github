@@ -110,7 +110,7 @@ jobs:
         run: |
            npm install
            npm install @nestjs/common           
-           npm install @types/express
+           npm install express @types/express
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
