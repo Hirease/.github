@@ -30,7 +30,7 @@ jobs:
 
       # Add main repository directory to safe.directory
       - name: Add main repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/front-end
+        run: git config --global --add safe.directory /home/runner/work/front-end/front-end
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -70,7 +70,7 @@ jobs:
 
       # Add main repository directory to safe.directory
       - name: Add main repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/front-end
+        run: git config --global --add safe.directory /home/runner/work/front-end/front-end
 
       - name: Debug Directory Structure (Main Repo)
         run: |
@@ -85,7 +85,7 @@ jobs:
 
       # Add front-end repository directory to safe.directory
       - name: Add front-end repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/front-end
+        run: git config --global --add safe.directory /home/runner/work/front-end/front-end/front-end
 
       - name: Debug Directory Structure (front-end Repo)
         run: |
@@ -100,7 +100,7 @@ jobs:
 
       # Add back-end repository directory to safe.directory
       - name: Add back-end repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/back-end
+        run: git config --global --add safe.directory /home/runner/work/front-end/front-end/back-end
 
       - name: Debug Directory Structure (Back-End Repo)
         run: |
@@ -157,7 +157,7 @@ jobs:
 
       # Add main repository directory to safe.directory
       - name: Add main repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/front-end
+        run: git config --global --add safe.directory /home/runner/work/front-end/front-end
 
       - name: Checkout front-end repository
         uses: actions/checkout@v3
@@ -168,7 +168,7 @@ jobs:
 
       # Add front-end repository directory to safe.directory
       - name: Add front-end repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/front-end
+        run: git config --global --add safe.directory /home/runner/work/front-end/front-end/front-end
 
       - name: Checkout back-end repository
         uses: actions/checkout@v3
@@ -179,7 +179,7 @@ jobs:
 
       # Add back-end repository directory to safe.directory
       - name: Add back-end repository to safe.directory
-        run: git config --global --add safe.directory /home/runner/work/back-end
+        run: git config --global --add safe.directory /home/runner/work/front-end/front-end/back-end
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
