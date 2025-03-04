@@ -17,10 +17,11 @@ on:
       - synchronize
       - reopened
 permissions:
-  repositories: ['Hirease/front-end', 'Hirease/back-end']
   contents: read
   actions: read
-  
+  id-token: write
+  checks: write
+
 jobs:
   setup:
     runs-on: ubuntu-latest
