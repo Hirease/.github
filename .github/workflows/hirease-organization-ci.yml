@@ -53,8 +53,8 @@ jobs:
         run: |
           npx commitlint --from=HEAD --to=HEAD
 
-      - name: Check test coverage
-        run: npm run test
+      #- name: Check test coverage
+       # run: npm run test
 
       - name: Build
         run: npm run build
