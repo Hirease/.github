@@ -58,90 +58,90 @@ jobs:
 
       - name: Build
         run: npm run build
+ # Terminate deploy temp
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: setup
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: setup
+  #   env:
+  #     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  #     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-    env:
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  #     - name: Debug Directory Structure (Main Repo)
+  #       run: |
+  #         ls -R  # Debugging step to list files and directories
 
-      - name: Debug Directory Structure (Main Repo)
-        run: |
-          ls -R  # Debugging step to list files and directories
+  #     - name: Debug Token
+  #       run: |
+  #         echo 'Token: ${{ secrets.SGITHUB_TOKEN }}'
 
-      - name: Debug Token
-        run: |
-          echo 'Token: ${{ secrets.SGITHUB_TOKEN }}'
+  #     - name: Checkout front-end repository
+  #       uses: actions/checkout@v3
+  #       with:
+  #         repository: Hirease/front-end
+  #         token: ${{ secrets.SGITHUB_TOKEN }}  # Or use a PAT if required
+  #         path: front-end
 
-      - name: Checkout front-end repository
-        uses: actions/checkout@v3
-        with:
-          repository: Hirease/front-end
-          token: ${{ secrets.SGITHUB_TOKEN }}  # Or use a PAT if required
-          path: front-end
+  #     - name: Debug Directory Structure (front-end Repo)
+  #       run: |
+  #         ls -R front-end  # Debugging step to list files and directories
 
-      - name: Debug Directory Structure (front-end Repo)
-        run: |
-          ls -R front-end  # Debugging step to list files and directories
+  #     - name: Checkout back-end repository
+  #       uses: actions/checkout@v3
+  #       with:
+  #         repository: Hirease/back-end
+  #         token: ${{ secrets.SGITHUB_TOKEN }}
+  #         path: back-end
 
-      - name: Checkout back-end repository
-        uses: actions/checkout@v3
-        with:
-          repository: Hirease/back-end
-          token: ${{ secrets.SGITHUB_TOKEN }}
-          path: back-end
+  #     - name: Debug Directory Structure (Back-End Repo)
+  #       run: |
+  #         ls -R back-end  # Debugging step to list files and directories
 
-      - name: Debug Directory Structure (Back-End Repo)
-        run: |
-          ls -R back-end  # Debugging step to list files and directories
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: "node"
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "node"
+  #     - name: Install dependencies
+  #       run: |
+  #          npm install
+  #          npm install @nestjs/common           
+  #          npm install express @types/express
 
-      - name: Install dependencies
-        run: |
-           npm install
-           npm install @nestjs/common           
-           npm install express @types/express
+  #     - name: Install Vercel CLI
+  #       run: npm install --global vercel@latest
 
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+  #     - name: Pull Vercel Environment Information
+  #       run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+  #     - name: Build Project Artifacts
+  #       run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+  #     - name: Deploy Project Artifacts to Vercel
+  #       run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+  #     - name: Log in to GitHub Container Registry
+  #       uses: docker/login-action@v2
+  #       with:
+  #         registry: ghcr.io
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.SGITHUB_TOKEN }}
 
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.SGITHUB_TOKEN }}
+  #     - name: Build and Push Mono-Client Docker Image
+  #       run: |
+  #         cd front-end  # Change to the front-end directory
+  #         docker build -t ghcr.io/hirease/mono-client:latest -f ./Dockerfile .
+  #         docker push ghcr.io/hirease/mono-client:latest
 
-      - name: Build and Push Mono-Client Docker Image
-        run: |
-          cd front-end  # Change to the front-end directory
-          docker build -t ghcr.io/hirease/mono-client:latest -f ./Dockerfile .
-          docker push ghcr.io/hirease/mono-client:latest
-
-      - name: Build and Push Mono-Server Docker Image
-        run: |
-          cd back-end  # Change to the back-end directory
-          docker build -t ghcr.io/hirease/mono-server:latest -f ./Dockerfile .
-          docker push ghcr.io/hirease/mono-server:latest
+  #     - name: Build and Push Mono-Server Docker Image
+  #       run: |
+  #         cd back-end  # Change to the back-end directory
+  #         docker build -t ghcr.io/hirease/mono-server:latest -f ./Dockerfile .
+  #         docker push ghcr.io/hirease/mono-server:latest
 
   sync-docker:
     runs-on: ubuntu-latest
